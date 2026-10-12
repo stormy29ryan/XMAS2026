@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Party 2026 Attendance & Raffle Registration System</title>
+  
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&family=Righteous&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --neon-pink: #ff0099;
+      --electric-blue: #00ffff;
+      --neon-green: #00ff00;
+      --gold: #ffd700;
+      --red: #ff0000;
+      --dark-bg: #0d0614;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(255, 0, 153, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+        linear-gradient(to bottom, #0a0410, #160a29);
+      color: #ffffff;
+      font-family: 'Righteous', cursive;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .font-arcade { font-family: 'Press Start 2P', cursive; }
+    .font-synth { font-family: 'Orbitron', sans-serif; }
+    .font-righteous { font-family: 'Righteous', cursive; }
+
+    /* Animated Falling Snow */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: #fff;
+      font-size: 1em;
+      font-family: Arial, sans-serif;
+      text-shadow: 0 0 5px #00ffff;
+      user-select: none;
+      z-index: 1;
+      pointer-events: none;
+      animation-name: snowflakes-fall, snowflakes-shake;
+      animation-duration: 10s, 3s;
+      animation-timing-function: linear, ease-in-out;
+      animation-iteration-count: infinite, infinite;
+      animation-play-state: running, running;
+    }
+
+    @keyframes snowflakes-fall {
+      0% { top: -10%; }
+      100% { top: 100%; }
+    }
+    @keyframes snowflakes-shake {
+      0%, 100% { transform: translateX(0px); }
+      50% { transform: translateX(80px); }
+    }
+
+    /* Animated Christmas Lights Garland */
+    .light-garland {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      pointer-events: none;
+    }
+
+    .light-garland li {
+      position: relative;
+      flex: 1;
+      margin: 0 4px;
+      height: 14px;
+      border-radius: 50%;
+      top: 2px;
+      animation-duration: 1.2s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+    }
+
+    .light-garland li:nth-child(4n+1) { background: var(--red); box-shadow: 0 2px 12px var(--red); animation-name: light-red; }
+    .light-garland li:nth-child(4n+2) { background: var(--neon-green); box-shadow: 0 2px 12px var(--neon-green); animation-name: light-green; animation-delay: 0.3s; }
+    .light-garland li:nth-child(4n+3) { background: var(--gold); box-shadow: 0 2px 12px var(--gold); animation-name: light-gold; animation-delay: 0.6s; }
+    .light-garland li:nth-child(4n+4) { background: var(--electric-blue); box-shadow: 0 2px 12px var(--electric-blue); animation-name: light-blue; animation-delay: 0.9s; }
+
+    @keyframes light-red { 0% { opacity: 0.3; } 100% { opacity: 1; box-shadow: 0 0 18px var(--red); } }
+    @keyframes light-green { 0% { opacity: 0.3; } 100% { opacity: 1; box-shadow: 0 0 18px var(--neon-green); } }
+    @keyframes light-gold { 0% { opacity: 0.3; } 100% { opacity: 1; box-shadow: 0 0 18px var(--gold); } }
+    @keyframes light-blue { 0% { opacity: 0.3; } 100% { opacity: 1; box-shadow: 0 0 18px var(--electric-blue); } }
+
+    /* Glowing retro neon panels */
+    .retro-box {
+      background: rgba(18, 9, 36, 0.85);
+      border: 2px solid var(--electric-blue);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), inset 0 0 15px rgba(0, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+    }
+
+    .retro-box-pink {
+      background: rgba(28, 6, 26, 0.85);
+      border: 2px solid var(--neon-pink);
+      box-shadow: 0 0 15px rgba(255, 0, 153, 0.4), inset 0 0 15px rgba(255, 0, 153, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+    }
+
+    .neon-text-pink {
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
+    }
+
+    .neon-text-blue {
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 10px var(--electric-blue), 0 0 20px var(--electric-blue), 0 0 40px var(--electric-blue);
+    }
+
+    .neon-text-gold {
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 10px var(--gold), 0 0 20px var(--gold), 0 0 40px var(--gold);
+    }
+
+    .neon-input {
+      background: rgba(10, 4, 20, 0.8);
+      border: 2px solid rgba(0, 255, 255, 0.5);
+      color: var(--gold);
+      transition: all 0.3s ease;
+    }
+
+    .neon-input:focus {
+      outline: none;
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 12px var(--neon-pink);
+      color: #ffffff;
+    }
+
+    .retro-btn {
+      background: linear-gradient(135deg, #ff0099 0%, #d80077 100%);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      box-shadow: 0 0 15px rgba(255, 0, 153, 0.6);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .retro-btn:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 25px rgba(255, 0, 153, 0.9);
+      background: linear-gradient(135deg, #00ffff 0%, #00b3b3 100%);
+      color: #000;
+    }
+
+    .retro-btn:disabled {
+      background: #333344;
+      border-color: #555566;
+      color: #777788;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Modal Backdrop Blur */
+    .modal-backdrop {
+      background: rgba(5, 2, 12, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Scanlines effect overlay */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+      ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.03)
+      );
+      background-size: 100% 4px, 6px 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen pb-12 pt-6 px-4 md:px-8 flex flex-col justify-between">
+
+  <!-- SCANLINES OVERLAY -->
+  <div class="fixed inset-0 scanlines z-40"></div>
+
+  <!-- ANIMATED CHRISTMAS LIGHTS GARLAND -->
+  <ul class="light-garland">
+    <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  </ul>
+
+  <!-- SNOWFLAKES CONTAINER -->
+  <div id="snow-container" class="pointer-events-none"></div>
+
+  <header class="max-w-6xl mx-auto w-full text-center my-4 relative z-10">
+    <div class="flex items-center justify-between mb-2 px-2">
+      <!-- LOGO PLACEHOLDERS -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-pink-600/30 border border-pink-500 flex items-center justify-center text-pink-400 font-bold shadow-[0_0_10px_#ff0099]">
+          <i class="fa-solid fa-gift text-xl"></i>
+        </div>
+        <div class="text-left">
+          <p class="text-xs text-cyan-400 font-synth tracking-widest uppercase">CORP EVENT</p>
+          <p class="text-xs text-pink-400 font-bold hidden sm:block">SFI COMMITEE</p>
+        </div>
+      </div>
+
+      <!-- ADMIN TOGGLE BUTTON -->
+      <button onclick="toggleAdminModal(true)" class="px-3 py-1.5 rounded-lg border border-yellow-400/60 bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-300 text-xs font-synth transition flex items-center gap-2">
+        <i class="fa-solid fa-user-shield"></i>
+        <span>ADMIN DASHBOARD</span>
+      </button>
+    </div>
+
+    <!-- MAIN EVENT BANNER HEADER -->
+    <div class="relative py-2">
+      <h2 class="text-xs md:text-sm font-arcade tracking-wider text-green-400 mb-1 animate-pulse">
+        🎄 COME AND JOIN THE 🎄
+      </h2>
+      <h1 class="text-2xl md:text-5xl font-black tracking-wider uppercase neon-text-pink font-righteous my-1 leading-tight">
+        CHRISTMAS PARTY 2026
+      </h1>
+      <div class="inline-block mt-2 px-4 py-1 rounded-full border border-cyan-400 bg-cyan-950/60 shadow-[0_0_15px_#00ffff]">
+        <span class="text-xs md:text-sm font-synth tracking-widest text-cyan-300 uppercase font-bold">
+          ✨ 80'S RETRO CHRISTMAS CELEBRATION ✨
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 my-4 relative z-10">
+
+    <!-- LEFT PANEL: REGISTRATION FORM -->
+    <section class="lg:col-span-6 retro-box-pink p-6 md:p-8 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between border-b border-pink-500/40 pb-3 mb-6">
+          <h3 class="text-lg font-synth text-pink-400 flex items-center gap-2 font-bold">
+            <i class="fa-solid fa-id-card text-pink-500"></i> ATTENDEE REGISTRATION
+          </h3>
+          <span class="text-xs font-arcade text-green-400 animate-pulse">● KIOSK READY</span>
+        </div>
+
+        <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+          <!-- FIRST NAME & LAST NAME -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-synth text-cyan-300 mb-1">FIRST NAME <span class="text-red-500">*</span></label>
+              <input type="text" id="firstName" required placeholder="e.g. Juan"
+                     class="w-full px-4 py-2.5 rounded-lg neon-input text-sm font-righteous">
+            </div>
+            <div>
+              <label class="block text-xs font-synth text-cyan-300 mb-1">LAST NAME <span class="text-red-500">*</span></label>
+              <input type="text" id="lastName" required placeholder="e.g. Dela Cruz"
+                     class="w-full px-4 py-2.5 rounded-lg neon-input text-sm font-righteous">
+            </div>
+          </div>
+
+          <!-- DEPARTMENT & BUSINESS UNIT -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-synth text-cyan-300 mb-1">DEPARTMENT <span class="text-red-500">*</span></label>
+              <input type="text" id="department" required placeholder="e.g. IT , CIC , COMOPS"
+                     class="w-full px-4 py-2.5 rounded-lg neon-input text-sm font-righteous">
+            </div>
+            <div>
+              <label class="block text-xs font-synth text-cyan-300 mb-1">BUSINESS UNIT <span class="text-red-500">*</span></label>
+              <input type="text" id="businessUnit" required placeholder="e.g. SFI,SFSC,CBSC"
+                     class="w-full px-4 py-2.5 rounded-lg neon-input text-sm font-righteous">
+            </div>
+          </div>
+
+          <!-- ADDRESS -->
+          <div>
+            <label class="block text-xs font-synth text-cyan-300 mb-1">ADDRESS <span class="text-red-500">*</span></label>
+            <input type="text" id="address" required placeholder="e.g. BATANGAS,BAUAN"
+                   class="w-full px-4 py-2.5 rounded-lg neon-input text-sm font-righteous">
+          </div>
+
+          <!-- WARNING FOR PHOTO REQUIREMENT -->
+          <div id="photoWarning" class="p-3 rounded-lg bg-pink-950/40 border border-pink-500/50 text-pink-300 text-xs flex items-center gap-2">
+            <i class="fa-solid fa-camera-retro text-lg text-pink-400"></i>
+            <span>Attendee photo capture required on right panel before registering!</span>
+          </div>
+
+          <!-- SUBMIT BUTTON -->
+          <button type="submit" id="submitBtn" disabled
+                  class="w-full py-4 mt-2 rounded-xl text-white font-arcade text-sm uppercase tracking-wider retro-btn border-2 border-pink-400">
+            REGISTER FOR RAFFLE
+          </button>
+        </form>
+      </div>
+
+      <p class="text-center text-xs text-gray-400 font-synth mt-6">
+        <i class="fa-solid fa-shield-halved text-cyan-400"></i> Unique entry auto-checked per full name
+      </p>
+    </section>
+
+    <!-- RIGHT PANEL: CAMERA CAPTURE & RAFFLE NUMBER DISPLAY -->
+    <section class="lg:col-span-6 flex flex-col gap-6">
+      <!-- CAMERA CAPTURE CARD -->
+      <div class="retro-box p-6 flex flex-col items-center justify-between flex-1">
+        <div class="w-full flex items-center justify-between border-b border-cyan-500/40 pb-3 mb-4">
+          <h3 class="text-lg font-synth text-cyan-400 flex items-center gap-2 font-bold">
+            <i class="fa-solid fa-camera text-cyan-400"></i> CAMERA CAPTURE
+          </h3>
+          <span id="cameraStatus" class="text-xs font-arcade text-yellow-400">INIT CAMERA...</span>
+        </div>
+
+        <!-- WEBCAM PREVIEW / CANVAS CONTAINER -->
+        <div class="relative w-full max-w-sm aspect-video bg-black/80 rounded-xl border-2 border-cyan-400 overflow-hidden shadow-[0_0_15px_rgba(0,255,255,0.3)] flex items-center justify-center">
+          <video id="webcam" autoplay playsinline class="w-full h-full object-cover"></video>
+          <canvas id="photoCanvas" class="w-full h-full object-cover hidden"></canvas>
+          
+          <!-- FALLBACK IF CAMERA DISABLED -->
+          <div id="cameraFallback" class="hidden text-center p-4">
+            <i class="fa-solid fa-video-slash text-3xl text-pink-500 mb-2"></i>
+            <p class="text-xs font-synth text-gray-300">Webcam standard stream unavailable.</p>
+            <button onclick="useAvatarFallback()" class="mt-2 text-xs text-cyan-300 underline font-synth">Use Christmas Avatar Photo</button>
+          </div>
+
+          <!-- RETRO CAMERA FRAME ACCENTS -->
+          <div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-pink-500 pointer-events-none"></div>
+          <div class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-pink-500 pointer-events-none"></div>
+          <div class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-pink-500 pointer-events-none"></div>
+          <div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-pink-500 pointer-events-none"></div>
+        </div>
+
+        <!-- CAMERA CONTROL BUTTONS -->
+        <div class="w-full max-w-sm flex gap-3 mt-4">
+          <button type="button" id="captureBtn" onclick="capturePhoto()"
+                  class="flex-1 py-3 px-4 rounded-xl font-arcade text-xs text-black bg-green-400 hover:bg-green-300 font-bold border-2 border-green-300 shadow-[0_0_15px_#00ff00] transition">
+            <i class="fa-solid fa-camera mr-1"></i> CAPTURE
+          </button>
+          <button type="button" id="retakeBtn" onclick="retakePhoto()" class="hidden flex-1 py-3 px-4 rounded-xl font-arcade text-xs text-white bg-pink-600 hover:bg-pink-500 font-bold border-2 border-pink-400 shadow-[0_0_15px_#ff0099] transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> RETAKE
+          </button>
+        </div>
+      </div>
+
+      <!-- LATEST ASSIGNED RAFFLE NUMBER BOX -->
+      <div class="retro-box p-6 text-center flex flex-col justify-center items-center">
+        <h4 class="text-xs font-arcade text-yellow-400 tracking-widest uppercase mb-1">LATEST RAFFLE NUMBER</h4>
+        <div id="latestRaffleDisplay" class="text-5xl md:text-6xl font-black font-arcade neon-text-gold py-2">
+          #---
+        </div>
+        <p class="text-xs text-cyan-300 font-synth">Unique Range: #001 to #350</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SUCCESS & CERTIFICATE POPUP MODAL -->
+  <div id="successModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+    <div class="retro-box-pink max-w-md w-full p-6 text-center relative border-2 border-green-400 shadow-[0_0_30px_rgba(0,255,0,0.5)] animate-bounce-short">
+      
+      <div class="text-4xl mb-2">🎉</div>
+      <h2 class="text-xl font-black font-arcade text-green-400 mb-1">REGISTRATION COMPLETE!</h2>
+      <p class="text-xs text-cyan-200 font-righteous mb-4">Thank you for registering for the Christmas Party 2026!</p>
+
+      <!-- STYLED CERTIFICATE / THANK YOU CARD PREVIEW -->
+      <div id="certificateCard" class="bg-gradient-to-b from-purple-950 to-indigo-950 p-5 rounded-xl border-2 border-dashed border-yellow-400 shadow-inner my-4 text-center relative overflow-hidden">
+        <div class="text-xs font-arcade text-pink-400 mb-1">MERRY CHRISTMAS 2026</div>
+        <h3 class="text-sm font-righteous text-cyan-300 uppercase tracking-wider">OFFICIAL RAFFLE TICKET</h3>
+        
+        <!-- ATTENDEE PHOTO SNAPSHOT IN TICKET -->
+        <div class="w-20 h-20 mx-auto my-3 rounded-full border-2 border-yellow-400 overflow-hidden shadow-[0_0_10px_#ffd700]">
+          <img id="certAttendeePhoto" src="" alt="Attendee" class="w-full h-full object-cover">
+        </div>
+
+        <p id="certAttendeeName" class="text-base font-bold text-white font-righteous mb-1">ATTENDEE NAME</p>
+        <p id="certAttendeeDept" class="text-xs text-cyan-200 font-synth mb-3">DEPARTMENT</p>
+
+        <div class="bg-black/60 py-2 px-4 rounded-lg border border-yellow-400/60 inline-block mb-2">
+          <span class="text-xs text-gray-300 font-synth block">RAFFLE NUMBER</span>
+          <span id="certRaffleNumber" class="text-3xl font-black font-arcade neon-text-gold">#127</span>
+        </div>
+
+        <p class="text-xs font-righteous text-yellow-300 italic">✨ Good Luck for the Raffle! ✨</p>
+      </div>
+
+      <div class="text-xs font-synth text-green-400 font-bold mb-4 flex items-center justify-center gap-1">
+        <i class="fa-solid fa-circle-check"></i> Registration Saved Successfully
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <button onclick="downloadConfirmationCard()" class="w-full py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-arcade text-xs font-bold border-2 border-cyan-200 shadow-[0_0_15px_#00ffff] transition">
+          <i class="fa-solid fa-download mr-1"></i> DOWNLOAD CONFIRMATION
+        </button>
+        <button onclick="closeSuccessModal()" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-arcade text-xs font-bold border-2 border-red-400 shadow-[0_0_15px_#ff0000] transition">
+          CLOSE
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD MODAL -->
+  <div id="adminModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop">
+    <div class="retro-box max-w-2xl w-full p-6 relative border-2 border-yellow-400 shadow-[0_0_30px_rgba(255,215,0,0.4)] max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex items-center justify-between border-b border-yellow-400/40 pb-3 mb-4">
+        <h3 class="text-lg font-arcade text-yellow-400 flex items-center gap-2">
+          <i class="fa-solid fa-toolbox"></i> ADMIN DASHBOARD
+        </h3>
+        <button onclick="toggleAdminModal(false)" class="text-gray-400 hover:text-white font-bold text-xl">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- STATS COUNTER GRID -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        <div class="bg-purple-950/80 p-3 rounded-xl border border-pink-500 text-center">
+          <span class="text-xs text-gray-300 font-synth block">TOTAL REGISTERED</span>
+          <span id="statRegistered" class="text-2xl font-arcade text-pink-400 font-bold">0</span>
+        </div>
+        <div class="bg-purple-950/80 p-3 rounded-xl border border-cyan-500 text-center">
+          <span class="text-xs text-gray-300 font-synth block">REMAINING SLOTS</span>
+          <span id="statRemaining" class="text-2xl font-arcade text-cyan-400 font-bold">350</span>
+        </div>
+        <div class="bg-purple-950/80 p-3 rounded-xl border border-yellow-500 text-center">
+          <span class="text-xs text-gray-300 font-synth block">NUMBERS USED</span>
+          <span id="statUsed" class="text-2xl font-arcade text-yellow-400 font-bold">0</span>
+        </div>
+        <div class="bg-purple-950/80 p-3 rounded-xl border border-green-500 text-center">
+          <span class="text-xs text-gray-300 font-synth block">AVAILABLE</span>
+          <span id="statAvailable" class="text-2xl font-arcade text-green-400 font-bold">350</span>
+        </div>
+      </div>
+
+      <!-- EXPORT CONTROL BUTTONS -->
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="exportData('csv')" class="flex-1 py-2.5 px-4 rounded-lg bg-green-600 hover:bg-green-500 text-white font-synth text-xs font-bold border border-green-400 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-file-csv text-base"></i> EXPORT CSV
+        </button>
+        <button onclick="exportData('excel')" class="flex-1 py-2.5 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-synth text-xs font-bold border border-emerald-400 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-file-excel text-base"></i> EXPORT EXCEL
+        </button>
+        <button onclick="printAttendanceList()" class="flex-1 py-2.5 px-4 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-synth text-xs font-bold border border-cyan-400 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-print text-base"></i> PRINT LIST
+        </button>
+      </div>
+
+      <!-- RECENT REGISTRATION LOG TABLE -->
+      <h4 class="text-xs font-arcade text-cyan-300 mb-2">RECENT REGISTRATIONS</h4>
+      <div class="overflow-x-auto rounded-lg border border-cyan-500/30">
+        <table class="w-full text-left text-xs text-gray-200">
+          <thead class="bg-purple-950/90 text-cyan-400 font-synth uppercase border-b border-cyan-500/30">
+            <tr>
+              <th class="p-2">Raffle #</th>
+              <th class="p-2">Name</th>
+              <th class="p-2">Dept</th>
+              <th class="p-2">Time</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody" class="divide-y divide-gray-800">
+            <tr>
+              <td colspan="4" class="p-4 text-center text-gray-500 font-synth">No registrations yet in session.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER / GOOGLE SITES EMBED LINK -->
+  <footer class="max-w-6xl mx-auto w-full text-center text-xs text-gray-400 font-synth mt-8 relative z-10 border-t border-cyan-900/40 pt-4">
+    <p>🎄 Christmas Party 2026 Kiosk System • Responsive Google Sites Web App 🎄</p>
+  </footer>
+
+  <script>
+    // System State Variables
+    const MAX_SLOTS = 350;
+    let registeredAttendees = [];
+    let capturedPhotoBase64 = null;
+    let videoStream = null;
+    let lastRegisteredItem = null;
+
+    // DOM References
+    const webcamEl = document.getElementById('webcam');
+    const canvasEl = document.getElementById('photoCanvas');
+    const captureBtn = document.getElementById('captureBtn');
+    const retakeBtn = document.getElementById('retakeBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const cameraStatus = document.getElementById('cameraStatus');
+    const cameraFallback = document.getElementById('cameraFallback');
+    const photoWarning = document.getElementById('photoWarning');
+
+    // Initialize snow effects & camera on load
+    window.addEventListener('load', () => {
+      createSnowflakes();
+      initCamera();
+      updateAdminStats();
+    });
+
+    // Generate Animated Snow
+    function createSnowflakes() {
+      const container = document.getElementById('snow-container');
+      const flakeChars = ['❄', '❅', '❆', '•'];
+      for (let i = 0; i < 30; i++) {
+        const flake = document.createElement('div');
+        flake.className = 'snowflake';
+        flake.innerHTML = flakeChars[Math.floor(Math.random() * flakeChars.length)];
+        flake.style.left = Math.random() * 100 + 'vw';
+        flake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        flake.style.animationDelay = (Math.random() * 5) + 's';
+        flake.style.fontSize = (Math.random() * 12 + 10) + 'px';
+        container.appendChild(flake);
+      }
+    }
+
+    // Initialize Camera Webcam
+    async function initCamera() {
+      try {
+        cameraStatus.textContent = 'CONNECTING...';
+        videoStream = await navigator.mediaDevices.getUserMedia({ 
+          video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' } 
+        });
+        webcamEl.srcObject = videoStream;
+        cameraStatus.textContent = '● LIVE';
+        cameraStatus.className = 'text-xs font-arcade text-green-400 animate-pulse';
+      } catch (err) {
+        console.warn('Webcam stream error:', err);
+        cameraStatus.textContent = 'OFFLINE';
+        cameraStatus.className = 'text-xs font-arcade text-pink-500';
+        webcamEl.classList.add('hidden');
+        cameraFallback.classList.remove('hidden');
+      }
+    }
+
+    // Capture Photo Logic
+    function capturePhoto() {
+      if (webcamEl.classList.contains('hidden') && !capturedPhotoBase64) {
+        useAvatarFallback();
+        return;
+      }
+
+      const ctx = canvasEl.getContext('2d');
+      canvasEl.width = webcamEl.videoWidth || 320;
+      canvasEl.height = webcamEl.videoHeight || 240;
+      ctx.drawImage(webcamEl, 0, 0, canvasEl.width, canvasEl.height);
+
+      capturedPhotoBase64 = canvasEl.toDataURL('image/jpeg', 0.85);
+
+      webcamEl.classList.add('hidden');
+      canvasEl.classList.remove('hidden');
+      captureBtn.classList.add('hidden');
+      retakeBtn.classList.remove('hidden');
+
+      // Enable Registration Submit Button
+      submitBtn.disabled = false;
+      photoWarning.className = 'p-3 rounded-lg bg-green-950/40 border border-green-500/50 text-green-300 text-xs flex items-center gap-2';
+      photoWarning.innerHTML = '<i class="fa-solid fa-circle-check text-lg text-green-400"></i> Photo captured! Ready to submit.';
+    }
+
+    // Retake Photo Logic
+    function retakePhoto() {
+      capturedPhotoBase64 = null;
+      canvasEl.classList.add('hidden');
+      webcamEl.classList.remove('hidden');
+      retakeBtn.classList.add('hidden');
+      captureBtn.classList.remove('hidden');
+
+      submitBtn.disabled = true;
+      photoWarning.className = 'p-3 rounded-lg bg-pink-950/40 border border-pink-500/50 text-pink-300 text-xs flex items-center gap-2';
+      photoWarning.innerHTML = '<i class="fa-solid fa-camera-retro text-lg text-pink-400"></i> Attendee photo capture required on right panel before registering!';
+    }
+
+    // Fallback Photo Generator if webcam denied
+    function useAvatarFallback() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 300;
+      canvas.height = 300;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#160a29';
+      ctx.fillRect(0, 0, 300, 300);
+      ctx.fillStyle = '#ff0099';
+      ctx.font = 'bold 30px Righteous';
+      ctx.textAlign = 'center';
+      ctx.fillText('🎄 MERRY 🎄', 150, 120);
+      ctx.fillStyle = '#00ffff';
+      ctx.fillText('CHRISTMAS', 150, 160);
+      ctx.fillStyle = '#ffd700';
+      ctx.fillText('2026', 150, 200);
+
+      capturedPhotoBase64 = canvas.toDataURL('image/jpeg');
+      canvasEl.getContext('2d').drawImage(canvas, 0, 0, canvasEl.width, canvasEl.height);
+      
+      webcamEl.classList.add('hidden');
+      cameraFallback.classList.add('hidden');
+      canvasEl.classList.remove('hidden');
+      captureBtn.classList.add('hidden');
+      retakeBtn.classList.remove('hidden');
+
+      submitBtn.disabled = false;
+      photoWarning.innerHTML = '<i class="fa-solid fa-circle-check text-lg text-green-400"></i> Avatar photo set! Ready to submit.';
+    }
+
+    // Generate Unique Random Raffle Number (001 - 350)
+    function generateUniqueRaffleNo() {
+      const usedNumbers = registeredAttendees.map(a => a.raffleNo);
+      if (usedNumbers.length >= MAX_SLOTS) return null;
+
+      let num;
+      do {
+        const rand = Math.floor(Math.random() * MAX_SLOTS) + 1;
+        num = String(rand).padStart(3, '0');
+      } while (usedNumbers.includes(num));
+
+      return num;
+    }
+
+    // Form Submit Handler
+    function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const department = document.getElementById('department').value.trim();
+      const businessUnit = document.getElementById('businessUnit').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      if (!capturedPhotoBase64) {
+        showCustomAlert("Please capture an attendee photo before registering!");
+        return;
+      }
+
+      // Check Duplicate: First Name + Last Name combo
+      const isDuplicate = registeredAttendees.some(
+        a => a.firstName.toLowerCase() === firstName.toLowerCase() &&
+             a.lastName.toLowerCase() === lastName.toLowerCase()
+      );
+
+      if (isDuplicate) {
+        showCustomAlert("You are already registered. Do not create another raffle number.");
+        return;
+      }
+
+      // Assign Raffle Number
+      const raffleNo = generateUniqueRaffleNo();
+      if (!raffleNo) {
+        showCustomAlert("Sorry! All 350 raffle registration slots have been filled.");
+        return;
+      }
+
+      const registrationData = {
+        timestamp: new Date().toLocaleString(),
+        raffleNo: raffleNo,
+        firstName: firstName,
+        lastName: lastName,
+        department: department,
+        businessUnit: businessUnit,
+        address: address,
+        photoData: capturedPhotoBase64
+      };
+
+      // Add to local session array
+      registeredAttendees.push(registrationData);
+      lastRegisteredItem = registrationData;
+
+      // Update Latest Raffle Display on Kiosk
+      document.getElementById('latestRaffleDisplay').textContent = '#' + raffleNo;
+
+      // Call Google Apps Script backend if available
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler((res) => console.log('GAS Saved Success:', res))
+          .withFailureHandler((err) => console.error('GAS Save Error:', err))
+          .processRegistration(registrationData);
+      }
+
+      // Trigger Confetti & Display Success Modal
+      launchConfetti();
+      showSuccessModal(registrationData);
+      updateAdminStats();
+
+      // Reset form
+      document.getElementById('registrationForm').reset();
+      retakePhoto();
+    }
+
+    // Custom Alert Notification
+    function showCustomAlert(msg) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'fixed top-12 left-1/2 -translate-x-1/2 z-50 bg-red-950 border-2 border-red-500 text-white font-righteous px-6 py-3 rounded-xl shadow-[0_0_20px_#ff0000] text-sm flex items-center gap-2';
+      alertDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-yellow-400"></i> ${msg}`;
+      document.body.appendChild(alertDiv);
+      setTimeout(() => alertDiv.remove(), 3500);
+    }
+
+    // Launch Confetti Effect
+    function launchConfetti() {
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#ff0099', '#00ffff', '#00ff00', '#ffd700', '#ff0000']
+      });
+    }
+
+    // Display Success Popup
+    function showSuccessModal(data) {
+      document.getElementById('certAttendeePhoto').src = data.photoData;
+      document.getElementById('certAttendeeName').textContent = `${data.firstName} ${data.lastName}`;
+      document.getElementById('certAttendeeDept').textContent = `${data.department} • ${data.businessUnit}`;
+      document.getElementById('certRaffleNumber').textContent = '#' + data.raffleNo;
+      document.getElementById('successModal').classList.remove('hidden');
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').classList.add('hidden');
+      // Reset the latest raffle display back to blank placeholder
+      document.getElementById('latestRaffleDisplay').textContent = '#---';
+    }
+
+    // Download Confirmation Certificate Card as Image/Canvas
+    function downloadConfirmationCard() {
+      if (!lastRegisteredItem) return;
+
+      const certCanvas = document.createElement('canvas');
+      certCanvas.width = 600;
+      certCanvas.height = 400;
+      const ctx = certCanvas.getContext('2d');
+
+      // Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, 400);
+      grad.addColorStop(0, '#160a29');
+      grad.addColorStop(1, '#0a0410');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 600, 400);
+
+      // Neon Frame
+      ctx.strokeStyle = '#00ffff';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(15, 15, 570, 370);
+
+      ctx.strokeStyle = '#ff0099';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(22, 22, 556, 356);
+
+      // Text Header
+      ctx.fillStyle = '#ff0099';
+      ctx.font = 'bold 20px Orbitron';
+      ctx.textAlign = 'center';
+      ctx.fillText('CHRISTMAS PARTY 2026', 300, 60);
+
+      ctx.fillStyle = '#ffd700';
+      ctx.font = 'bold 16px Righteous';
+      ctx.fillText('OFFICIAL REGISTRATION TICKET', 300, 90);
+
+      // Name & Dept
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 24px Righteous';
+      ctx.fillText(`${lastRegisteredItem.firstName} ${lastRegisteredItem.lastName}`, 300, 140);
+
+      ctx.fillStyle = '#00ffff';
+      ctx.font = '16px Righteous';
+      ctx.fillText(`${lastRegisteredItem.department} - ${lastRegisteredItem.businessUnit}`, 300, 170);
+
+      // Raffle Badge Box
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(180, 200, 240, 80);
+      ctx.strokeStyle = '#ffd700';
+      ctx.strokeRect(180, 200, 240, 80);
+
+      ctx.fillStyle = '#ffd700';
+      ctx.font = 'bold 40px Orbitron';
+      ctx.fillText(`#${lastRegisteredItem.raffleNo}`, 300, 255);
+
+      // Footer Wish
+      ctx.fillStyle = '#00ff00';
+      ctx.font = 'bold 16px Righteous';
+      ctx.fillText('✨ Thank You For Registering - Good Luck! ✨', 300, 330);
+
+      // Download link trigger
+      const link = document.createElement('a');
+      link.download = `ChristmasParty2026_Raffle_${lastRegisteredItem.raffleNo}.png`;
+      link.href = certCanvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Toggle Admin Modal
+    function toggleAdminModal(show) {
+      const modal = document.getElementById('adminModal');
+      if (show) {
+        modal.classList.remove('hidden');
+        updateAdminStats();
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    // Update Admin Stats & Table
+    function updateAdminStats() {
+      const registeredCount = registeredAttendees.length;
+      const remainingCount = MAX_SLOTS - registeredCount;
+
+      document.getElementById('statRegistered').textContent = registeredCount;
+      document.getElementById('statRemaining').textContent = remainingCount;
+      document.getElementById('statUsed').textContent = registeredCount;
+      document.getElementById('statAvailable').textContent = remainingCount;
+
+      const tbody = document.getElementById('adminTableBody');
+      if (registeredAttendees.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500 font-synth">No registrations yet in session.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = registeredAttendees.slice().reverse().map(item => `
+        <tr class="hover:bg-purple-900/40">
+          <td class="p-2 font-arcade text-yellow-400">#${item.raffleNo}</td>
+          <td class="p-2 font-bold">${item.firstName} ${item.lastName}</td>
+          <td class="p-2 text-cyan-300">${item.department}</td>
+          <td class="p-2 text-gray-400 text-[10px]">${item.timestamp}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Export Data (CSV or Excel Format)
+    function exportData(type) {
+      if (registeredAttendees.length === 0) {
+        showCustomAlert("No registration data available to export!");
+        return;
+      }
+
+      let content = "Raffle No,First Name,Last Name,Department,Business Unit,Address,Timestamp\n";
+      registeredAttendees.forEach(item => {
+        content += `"${item.raffleNo}","${item.firstName}","${item.lastName}","${item.department}","${item.businessUnit}","${item.address}","${item.timestamp}"\n`;
+      });
+
+      const mimeType = type === 'csv' ? 'text/csv' : 'application/vnd.ms-excel';
+      const extension = type === 'csv' ? 'csv' : 'xls';
+
+      const blob = new Blob([content], { type: mimeType });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `Christmas_Party_2026_Attendance.${extension}`;
+      link.click();
+    }
+
+    // Print Attendance List
+    function printAttendanceList() {
+      if (registeredAttendees.length === 0) {
+        showCustomAlert("No registration data to print!");
+        return;
+      }
+
+      const printWin = window.open('', '', 'width=800,height=600');
+      let html = `
+        <html>
+        <head>
+          <title>Christmas Party 2026 Attendance List</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            h2 { color: #d80077; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+          </style>
+        </head>
+        <body>
+          <h2>Christmas Party 2026 - Official Attendance & Raffle List</h2>
+          <p>Total Registered: ${registeredAttendees.length} / ${MAX_SLOTS}</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Raffle #</th>
+                <th>Full Name</th>
+                <th>Department</th>
+                <th>Business Unit</th>
+                <th>Address</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      registeredAttendees.forEach(item => {
+        html += `
+          <tr>
+            <td><strong>#${item.raffleNo}</strong></td>
+            <td>${item.firstName} ${item.lastName}</td>
+            <td>${item.department}</td>
+            <td>${item.businessUnit}</td>
+            <td>${item.address}</td>
+            <td>${item.timestamp}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+            </tbody>
+          </table>
+        </body>
+        </html>
+      `;
+
+      printWin.document.write(html);
+      printWin.document.close();
+      printWin.focus();
+      printWin.print();
+      printWin.close();
+    }
+  </script>
+</body>
+</html>
